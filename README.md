@@ -17,3 +17,6 @@ docker run --name nodejs14.17.0-pm2 -d \
 -v /path/to/pm2_configs/:/data/pm2/ \
 amoydreamer/nodejs
 ```
+
+## License
+docker-nodejs is [MIT licensed](https://github.com/AmoyDreamer/docker-nodejs/blob/master/LICENSE).
