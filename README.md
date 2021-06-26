@@ -8,13 +8,13 @@ docker pull amoydreamer/nodejs:14.17.0-pm2
 ## Usage
 
 ### Ready
-You need edit a config file named **process.json** in pm2_configs directory to support node process management. Your local directory structure like this => **/path/to/pm2_configs/process.json**, in order to mount data volumes when creating containers.
+You need edit a config [file](https://pm2.keymetrics.io/docs/usage/process-management/#process-configuration) named **process.json** in pm2 directory to support node process management. Your local directory structure like this => **/path/to/pm2/process.json**, in order to mount data volumes when creating containers.
 
 ### Create a runtime container with current image
 ```
 docker run --name nodejs14.17.0-pm2 -d \
 --restart=always \
--v /path/to/pm2_configs/:/data/pm2/ \
+-v /path/to/pm2/:/data/pm2/ \
 amoydreamer/nodejs
 ```
 
