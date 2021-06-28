@@ -7,12 +7,15 @@ RUN yum install -y deltarpm \
     && yum install -y wget rsync gcc gcc-c++ make \
     && cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
-# install tnvm、alinode、pm2、agenthub
-RUN wget -O- https://raw.githubusercontent.com/aliyun-node/tnvm/master/install.sh | bash \
-    && source ~/.bashrc \
-    && tnvm install alinode-v6.5.0 \
-    && tnvm use alinode-v6.5.0 \
-    && npm install pm2 @alicloud/agenthub -g
+# download compressed package of node source code and unzip it
+RUN wget https://nodejs.org/dist/v14.17.0/node-v14.17.0-linux-x64.tar.gz -P /root \
+    && tar -zxvf /root/node-v14.17.0-linux-x64.tar.gz -C /root
 
-ENV PATH="/root/.tnvm/versions/alinode/v6.5.0/bin:${PATH}"
-CMD ["sh", "-c", "agenthub start /data/pm2/config.json; ENABLE_NODE_LOG=YES pm2 start /data/pm2/process.json; pm2 logs"]
+# set environment variable
+ENV PATH="/root/node-v14.17.0-linux-x64/bin:${PATH}"
+
+# install PM2 and remove node package
+RUN npm install pm2 -g \
+    && rm -rf /root/node-v14.17.0-linux-x64.tar.gz
+
+CMD ["sh", "-c", "pm2 start /data/pm2/process.json; pm2 logs"]
